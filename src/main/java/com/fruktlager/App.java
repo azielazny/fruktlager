@@ -1,43 +1,48 @@
 package com.fruktlager;
 
-import com.fruktlager.model.Address;
-import com.fruktlager.model.Area;
-import com.fruktlager.model.Member;
-import com.fruktlager.model.MemberType;
 import com.fruktlager.model.repositories.MemberRepository;
 import com.fruktlager.repositories.CSVMemberRepository;
-import com.fruktlager.ui.AuthenticationManager;
-import com.fruktlager.ui.AuthenticationScreen;
+import com.fruktlager.ui.LoginManager;
+import com.fruktlager.ui.LoginScreen;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import javax.servlet.http.HttpServlet;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import java.util.Scanner;
 
 /**
  * Hello world!
- *
  */
-public class App 
-{
+@Path("/index")
+public class App extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(App.class);
 
+    private final String REPOSITORY_DIRECTORY_PATH = "D:/smieci/kobietydokodu.pl/fruktlager/src/main/resources/";
 
-    private final String REPOSITORY_DIRECTORY_PATH="D:/smieci/kobietydokodu.pl/fruktlager/src/main/resources/";
+    @GET
+    public static void main(String[] args) {
 
-    public static void main(String[] args )
-    {
-
-        System.out.println( "Hello World!" );
+        System.out.println("Hello in the Fruktlager System!");
         new App().start();
 
     }
-    public void start() {
+
+
+    private void start() {
         Scanner scanner = new Scanner(System.in);
 
         MemberRepository memberRepository = new CSVMemberRepository(REPOSITORY_DIRECTORY_PATH);
-        AuthenticationManager authenticationManager = new AuthenticationManager(memberRepository);
-        AuthenticationScreen authenticationScreen = new AuthenticationScreen(scanner, authenticationManager);
+        LoginManager loginManager = new LoginManager(memberRepository);
+        LoginScreen loginScreen = new LoginScreen(scanner, loginManager);
 
-authenticationScreen.show();
-        System.out.println(memberRepository.get(authenticationManager.getMemberNumber()));
-        System.out.println(memberRepository.get(113));
-        memberRepository.save(new Member(88, new Address("Zenek", "Testowy", "ul. Zabłocka 11", "", "Poland", "Gdańsk", "80-001", "+475555555"), MemberType.PRODUCER, "test@test.com", "hasło", new Area("aaaa"), "testowyLogin"));
+        loginScreen.show();
+        LOGGER.debug("Token for member: " + loginScreen.getLoginDataMap().get("token"));
+
+
+        //        System.out.println(memberRepository.get(authenticationManager.getMemberNumber()));
+//        System.out.println(memberRepository.get(113));
+//        memberRepository.save(new Member(88, new Address("Zenek", "Testowy", "ul. Zabłocka 11", "", "Poland", "Gdańsk", "80-001", "+475555555"), MemberType.PRODUCER, "test@test.com", "hasło", new Area("aaaa"), "testowyLogin"));
     }
 }
