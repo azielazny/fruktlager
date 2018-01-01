@@ -2,7 +2,8 @@ package com.fruktlager;
 
 import com.fruktlager.model.repositories.MemberRepository;
 import com.fruktlager.repositories.CSVMemberRepository;
-import com.fruktlager.ui.LoginManager;
+import com.fruktlager.ui.MenuScreen;
+import com.fruktlager.ui.rest.LoginManager;
 import com.fruktlager.ui.LoginScreen;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +40,8 @@ public class App extends HttpServlet {
 
         loginScreen.show();
         LOGGER.debug("Token for member: " + loginScreen.getLoginDataMap().get("token"));
-
+        MenuScreen menuScreen = new MenuScreen(scanner);
+        menuScreen.show();
 
         //        System.out.println(memberRepository.get(authenticationManager.getMemberNumber()));
 //        System.out.println(memberRepository.get(113));

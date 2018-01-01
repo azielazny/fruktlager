@@ -1,5 +1,6 @@
 package com.fruktlager.ui;
 
+import com.fruktlager.ui.rest.LoginManager;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;

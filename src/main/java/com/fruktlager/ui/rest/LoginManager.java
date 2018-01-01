@@ -1,4 +1,4 @@
-package com.fruktlager.ui;
+package com.fruktlager.ui.rest;
 
 import com.fruktlager.application.AppConfig;
 import com.fruktlager.model.Member;
